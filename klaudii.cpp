@@ -33,15 +33,15 @@ void stala() {
 	N = 0;
 	while (o*h < a) {
 		if (o % 2 == 0)
-			N += 4 * pow(o*h * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *o*h)), 2);
+			N += 2 * pow(o*h * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *o*h)), 2);
 		else
-			N += 2 * pow(o*h * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *o*h)), 2);;
+			N += 4 * pow(o*h * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *o*h)), 2);;
 		o++;
 	}
 
 	N += pow(a * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *a)), 2);
 	N *= h / 3;
-	cout << "N = " << 1/sqrt(N) << endl;
+	cout << "N = " << N << endl;
 	return;
 }
 void macierze()
@@ -93,9 +93,9 @@ void macierze()
 			dx = boost::math::laguerre(i, 2 * l + 1, 0)*boost::math::laguerre(j, 2 * l + 1, 0)*pow(0, 2 * l + 2)*exp(-2 * lamb * 0);
 			while (o*h < b) {
 				if (o % 2 == 0)
-					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
-				else
 					dx += 2 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
+				else
+					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
 				o++;
 			}
 
@@ -115,9 +115,9 @@ void macierze()
 			dx = boost::math::laguerre(i, 2 * l + 1, 0)*boost::math::laguerre(j, 2 * l + 1, 0)*pow(0, 2 * l + 2)*exp(-2 * lamb * 0);
 			while (o*h < a) {
 				if (o % 2 == 0)
-					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
-				else
 					dx += 2 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
+				else
+					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
 				o++;
 			}
 			dx += boost::math::laguerre(i, 2 * l + 1, 2 * lamb*a)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*a)*pow(2 * lamb*a, 2 * l + 2)*exp(-2 * lamb*a);
@@ -193,9 +193,9 @@ void potencjal()
 			dx = boost::math::laguerre(i, 2 * l + 1, 0)*boost::math::laguerre(j, 2 * l + 1, 0)*pow(0, 2 * l + 2)*exp(-2 * lamb * 0);
 			while (o*h < b) {
 				if (o % 2 == 0)
-					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
-				else
 					dx += 2 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
+				else
+					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
 				o++;
 			}
 
@@ -218,9 +218,9 @@ void potencjal()
 			dx = boost::math::laguerre(i, 2 * l + 1, 0)*boost::math::laguerre(j, 2 * l + 1, 0)*pow(0, 2 * l)*exp(-2 * lamb * 0);
 			while (o*h < b) {
 				if (o % 2 == 0)
-					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l)*exp(-2 * lamb*o*h);
-				else
 					dx += 2 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l)*exp(-2 * lamb*o*h);
+				else
+					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l)*exp(-2 * lamb*o*h);
 				o++;
 			}
 			dx += boost::math::laguerre(i, 2 * l + 1, 2 * lamb*b)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*b)*pow(2 * lamb*b, 2 * l)*exp(-2 * lamb*b);
@@ -232,9 +232,9 @@ void potencjal()
 			dx = boost::math::laguerre(i, 2 * l + 1, 0)*boost::math::laguerre(j, 2 * l + 1, 0)*pow(0, 2 * l + 1)*exp(-2 * lamb * 0);
 			while (o*h < b) {
 				if (o % 2 == 0)
-					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 1)*exp(-2 * lamb*o*h);
-				else
 					dx += 2 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 1)*exp(-2 * lamb*o*h);
+				else
+					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 1)*exp(-2 * lamb*o*h);
 				o++;
 			}
 			dx += boost::math::laguerre(i, 2 * l + 1, 2 * lamb*b)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*b)*pow(2 * lamb*b, 2 * l + 1)*exp(-2 * lamb*b);
@@ -246,9 +246,9 @@ void potencjal()
 			dx = boost::math::laguerre(i, 2 * l + 1, 0)*boost::math::laguerre(j, 2 * l + 1, 0)*pow(0, 2 * l + 3)*exp(-2 * lamb * 0);
 			while (o*h < b) {
 				if (o % 2 == 0)
-					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 3)*exp(-2 * lamb*o*h);
-				else
 					dx += 2 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 3)*exp(-2 * lamb*o*h);
+				else
+					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 3)*exp(-2 * lamb*o*h);
 				o++;
 			}
 			dx += boost::math::laguerre(i, 2 * l + 1, 2 * lamb*b)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*b)*pow(2 * lamb*b, 2 * l + 3)*exp(-2 * lamb*b);
