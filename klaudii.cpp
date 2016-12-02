@@ -17,6 +17,7 @@ void stala() {
 	int l = 0;
 	double v0 = 0;
 	double a = 0;
+	double b = 0;
 
 	cout << "E = ";
 	cin >> E;
@@ -26,22 +27,38 @@ void stala() {
 	cin >> v0;
 	cout << "a = ";
 	cin >> a;
+	cout << "b = ";
+	cin >> b;
 
-	double N = 0;
+	double N1 = 0;
 	double h = a *0.0001;
 	int o = 1;
-	N = 0;
 	while (o*h < a) {
 		if (o % 2 == 0)
-			N += 2 * pow(o*h * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *o*h)), 2);
+			N1 += 2 * pow(o*h * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *o*h)), 2);
 		else
-			N += 4 * pow(o*h * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *o*h)), 2);;
+			N1 += 4 * pow(o*h * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *o*h)), 2);;
 		o++;
 	}
 
-	N += pow(a * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *a)), 2);
-	N *= h / 3;
-	cout << "N = " << N << endl;
+	N1 += pow(a * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *a)), 2);
+	N1 *= h / 3;
+	cout << "Na = " << 1 / sqrt(N1) << endl;
+
+	double N2 = 0;
+	h = (b - a) *0.0001;
+	o = a;
+	while (o*h < b) {
+		if (o % 2 == 0)
+			N2 += 2 * pow(o*h * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *a)) *sqrt(1 / (o*h)) *boost::math::cyl_bessel_k(l + 1 / 2, (sqrt(-2 * E) *o*h)) / (sqrt(1 / a)* boost::math::cyl_bessel_k(l + 1 / 2, (sqrt(-2 * E) *a))), 2);
+		else
+			N2 += 4 * pow(o*h * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *a)) *sqrt(1 / (o*h)) *boost::math::cyl_bessel_k(l + 1 / 2, (sqrt(-2 * E) *o*h)) / (sqrt(1 / a)* boost::math::cyl_bessel_k(l + 1 / 2, (sqrt(-2 * E) *a))), 2);
+		o++;
+	}
+
+	N2 += pow(b * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *a)) *sqrt(1 / b) *boost::math::cyl_bessel_k(l + 1 / 2, (sqrt(-2 * E) *b)) / (sqrt(1 / a)* boost::math::cyl_bessel_k(l + 1 / 2, (sqrt(-2 * E) *a))), 2);
+	N2 *= h / 3;
+	cout << "Nb = " << 1 / sqrt(N2) << endl;
 	return;
 }
 void macierze()
@@ -157,8 +174,8 @@ void potencjal()
 	int n = 1;
 	int m = 1;
 	int b = 0;
-	double tmp = 0;
 	int a0 = 1;
+	double tmp = 0;
 
 	cout << "l = ";
 	cin >> l;
@@ -225,7 +242,7 @@ void potencjal()
 			}
 			dx += boost::math::laguerre(i, 2 * l + 1, 2 * lamb*b)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*b)*pow(2 * lamb*b, 2 * l)*exp(-2 * lamb*b);
 			dx *= h / 3;
-			I3 = 2 * dx*pm*pn;
+			I3 = -2 * dx*pm*pn;
 			//I4
 			h = b * 0.0001;
 			o = 1;
