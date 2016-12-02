@@ -43,7 +43,7 @@ void stala() {
 
 	N1 += pow(a * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *a)), 2);
 	N1 *= h / 3;
-	cout << "Na = " << 1 / sqrt(N1) << endl;
+	cout << "Na = " << N1 << endl;
 
 	double N2 = 0;
 	h = (b - a) *0.0001;
@@ -58,7 +58,7 @@ void stala() {
 
 	N2 += pow(b * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *a)) *sqrt(1 / b) *boost::math::cyl_bessel_k(l + 1 / 2, (sqrt(-2 * E) *b)) / (sqrt(1 / a)* boost::math::cyl_bessel_k(l + 1 / 2, (sqrt(-2 * E) *a))), 2);
 	N2 *= h / 3;
-	cout << "Nb = " << 1 / sqrt(N2) << endl;
+	cout << "Nb = " << N2 << endl;
 	return;
 }
 void macierze()
