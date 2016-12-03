@@ -43,7 +43,7 @@ void stala() {
 
 	N1 += pow(a * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *a)), 2);
 	N1 *= h / 3;
-	cout << "Na = " << N1 << endl;
+	cout << "Na = " << 1 / sqrt(N1) << endl;
 
 	double N2 = 0;
 	h = (b - a) *0.0001;
@@ -58,7 +58,7 @@ void stala() {
 
 	N2 += pow(b * boost::math::sph_bessel(l, (sqrt(2 * (E + v0)) *a)) *sqrt(1 / b) *boost::math::cyl_bessel_k(l + 1 / 2, (sqrt(-2 * E) *b)) / (sqrt(1 / a)* boost::math::cyl_bessel_k(l + 1 / 2, (sqrt(-2 * E) *a))), 2);
 	N2 *= h / 3;
-	cout << "Nb = " << N2 << endl;
+	cout << "Nb = " << 1 / sqrt(N2) << endl;
 	return;
 }
 void macierze()
@@ -296,17 +296,136 @@ void potencjal()
 	cout << "kupa";
 	return;
 }
+void potencjal2()
+{
+	int lamb = 1;
+	int l = 0;
+	double E = -0.5;
+	double e = 1;
+	int n = 1;
+	int m = 1;
+	int b = 0;
+	int a0 = 1;
+	double tmp = 0;
+
+	cout << "l = ";
+	cin >> l;
+	cout << "b = ";
+	cin >> b;
+	cout << "n = ";
+	cin >> n;
+	cout << "m = ";
+	cin >> m;
+
+	double h = b * 0.0001;
+	double dx = 0;
+	int o = 0;
+	double pm, pn, I1, I2, I3, I4, I5;
+	I1 = 0;
+	I2 = 0;
+	I3 = 0;
+	I4 = 0;
+	I5 = 0;
+	double** D = new double*[n];
+	for (int i = 0; i < n; ++i)
+		D[i] = new double[m];
+	double** H = new double*[n];
+	for (int i = 0; i < n; ++i)
+		H[i] = new double[m];
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			pm = sqrt(boost::math::factorial<double>(j) / (lamb*a0*(j + l + 1)*boost::math::factorial<double>(j + 2 * l + 1)));
+			pn = sqrt(boost::math::factorial<double>(i) / (lamb*a0*(i + l + 1)*boost::math::factorial<double>(i + 2 * l + 1)));
+			o = 1;
+			dx = boost::math::laguerre(i, 2 * l + 1, 0)*boost::math::laguerre(j, 2 * l + 1, 0)*pow(0, 2 * l + 2)*exp(-2 * lamb * 0);
+			while (o*h < b) {
+				if (o % 2 == 0)
+					dx += 2 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
+				else
+					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 2)*exp(-2 * lamb*o*h);
+				o++;
+			}
+
+			dx += boost::math::laguerre(i, 2 * l + 1, 2 * lamb*b)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*b)*pow(2 * lamb*b, 2 * l + 2)*exp(-2 * lamb*b);
+			dx *= h / 3;
+			D[j][i] = dx*pn*pm;
+			//teraz cos innego
+			//I1
+			if (j == i) {
+				I1 = e*e;
+			}
+			else {
+				I1 = 0;
+			}
+			//I2
+			I2 = E * dx*pn*pm;
+			//I4
+			h = b * 0.0001;
+			o = 1;
+			dx = boost::math::laguerre(i, 2 * l + 1, 0)*boost::math::laguerre(j, 2 * l + 1, 0)*pow(0, 2 * l + 1)*exp(-2 * lamb * 0);
+			while (o*h < b) {
+				if (o % 2 == 0)
+					dx += 2 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 1)*exp(-2 * lamb*o*h);
+				else
+					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 1)*exp(-2 * lamb*o*h);
+				o++;
+			}
+			dx += boost::math::laguerre(i, 2 * l + 1, 2 * lamb*b)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*b)*pow(2 * lamb*b, 2 * l + 1)*exp(-2 * lamb*b);
+			dx *= h / 3;
+			I4 = -3 * dx*pm*pn;
+			//I5
+			h = b * 0.0001;
+			o = 1;
+			dx = boost::math::laguerre(i, 2 * l + 1, 0)*boost::math::laguerre(j, 2 * l + 1, 0)*pow(0, 2 * l + 3)*exp(-2 * lamb * 0);
+			while (o*h < b) {
+				if (o % 2 == 0)
+					dx += 2 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 3)*exp(-2 * lamb*o*h);
+				else
+					dx += 4 * boost::math::laguerre(i, 2 * l + 1, 2 * lamb*o*h)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*o*h)*pow(2 * lamb*o*h, 2 * l + 3)*exp(-2 * lamb*o*h);
+				o++;
+			}
+			dx += boost::math::laguerre(i, 2 * l + 1, 2 * lamb*b)*boost::math::laguerre(j, 2 * l + 1, 2 * lamb*b)*pow(2 * lamb*b, 2 * l + 3)*exp(-2 * lamb*b);
+			dx *= h / 3;
+			I5 = 3 * dx*pm*pn;
+			H[j][i] = I1 + I2 + I3 + I4 + I5;
+		}
+	}
+
+	std::ofstream plik;
+	plik.open("Dee.txt");
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			plik << D[j][i] << "\t";
+		}
+		plik << endl;
+	}
+	plik.close();
+	plik.open("Haa.txt");
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			plik << H[j][i] << "\t";
+		}
+		plik << endl;
+	}
+	plik.close();
+
+	cout << "kupa";
+	return;
+}
 void main() {
 	int temp;
 	cout << "Wybierz funkcje:" << endl;
 	cout << "Macierze:1" << endl;
 	cout << "Stala:2" << endl;
 	cout << "Potencjal:3" << endl;
+	cout << "Potencjal2:4" << endl;
 	cin >> temp;
 	switch (temp) {
 	case 1:macierze(); break;
 	case 2:stala(); break;
 	case 3:potencjal(); break;
+	case 4:potencjal2(); break;
 	default:break;
 	}
 	system("pause");
