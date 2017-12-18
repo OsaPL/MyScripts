@@ -15,3 +15,6 @@ auto occ:
 	
 install_win_tweak:
 	Deletes all unnecessary apps and services, speeds up Win10 and gives more free disk space. (to leave apps you want just respond n for no, or if you want do delete y for yes)
+
+netswitch:
+	A simple and quick switch to use between wifi and wired network
