@@ -168,14 +168,6 @@ IF ERRORLEVEL 2 (
 	echo "Not deleting Calendar app"
 )
 
-choice  /m "Do you want to delete Calendar app?"
-IF ERRORLEVEL 1 (
-	powershell -command "Get-AppxPackage *comm* | Remove-AppxPackage"
-)
-IF ERRORLEVEL 2 (
-	echo "Not deleting Calendar app"
-)
-
 choice  /m "Do you want to delete OneNote?"
 IF ERRORLEVEL 1 (
 	powershell -command "Get-AppxPackage *onenote* | Remove-AppxPackage"
