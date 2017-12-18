@@ -1,5 +1,3 @@
-@echo off
-
 :-------------------------------------
 
 REM  --> Check for permissions
@@ -54,8 +52,14 @@ if '%errorlevel%' NEQ '0' (
 
 :--------------------------------------   
 
+ECHO 
+timeout 1
+ECHO 
+
 netsh interface set interface "Ethernet" admin=disable
 timeout 1
 netsh interface set interface "Wi-Fi" admin=enable
+
+
 
 :--------------------------------------   

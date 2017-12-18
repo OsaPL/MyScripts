@@ -1,4 +1,3 @@
-@echo off
 
 :-------------------------------------
 
@@ -54,8 +53,15 @@ if '%errorlevel%' NEQ '0' (
 
 :--------------------------------------   
 
+ECHO 
+timeout 1
+ECHO 
+timeout 1
+ECHO 
+
 netsh interface set interface "Wi-Fi" admin=disable
 timeout 1
 netsh interface set interface "Ethernet" admin=enable
+
 
 :--------------------------------------   
