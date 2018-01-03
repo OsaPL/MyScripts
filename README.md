@@ -18,3 +18,9 @@ install_win_tweak:
 
 netswitch:
 	A simple and quick switch to use between wifi and wired network
+	
+Spotlight_extractor:
+	Batch script to copy and convert all Spotlight service wallpapers (only Windows 10).
+	Additionaly if ImageMagick is installed, you can get them sorted by orientation.
+	For my personal, still updating collection of the wallpapper (all are sorted), check out https://github.com/OsaPL/SpotlightWallpapers. Requirements: Windows 10,(not required)ImageMagick
+
