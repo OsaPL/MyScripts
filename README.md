@@ -24,3 +24,5 @@ Spotlight_extractor:
 	Additionaly if ImageMagick is installed, you can get them sorted by orientation.
 	For my personal, still updating collection of the wallpapper (all are sorted), check out https://github.com/OsaPL/SpotlightWallpapers. Requirements: Windows 10,(not required)ImageMagick
 
+volume fixer:
+	Background script for reseting volume back to 100%
