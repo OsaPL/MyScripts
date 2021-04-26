@@ -9,8 +9,8 @@ After=network.target
 StartLimitIntervalSec=0
 
 [Service]
-Environment="token=NzkwNjc1OTgxMzcxMTc5MDY4.X-EEZA.r_63gr5eSaPbrBK-gpZwUK0JEjo"
-Environment="masterId=240155153062297600"
+Environment="token=<token here>"
+Environment="masterId=<masterId here>"
 Type=simple
 Restart=always
 RestartSec=60
