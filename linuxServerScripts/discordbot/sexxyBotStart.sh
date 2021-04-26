@@ -1,1 +1,1 @@
-./SexxyDiscordBot "NzkwNjc1OTgxMzcxMTc5MDY4.X-EEZA.r_63gr5eSaPbrBK-gpZwUK0JEjo" "240155153062297600"
+./SexxyDiscordBot "<token here>" "<masterid here>"
