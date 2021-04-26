@@ -1,0 +1,24 @@
+# 4) Execute `sudo systemctl daemon-reload`
+# 5) Execute `sudo systemctl enable mcServer`
+# 6) Execute `sudo systemctl start mcServer`
+
+[Unit]
+Description=Minecraft server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=60
+User=osa
+WorkingDirectory=/serverdata/mcServer
+ExecStart=/usr/bin/screen -DmS mcServer java -Xms2G -Xmx2G -XX:+UseConcMarkSweepGC -jar paper.jar
+
+ExecStop=/usr/bin/screen -p 0 -S mcServer -X eval 'stuff "say SERVER SHUTTING DOWN. Saving map..."\\015'
+ExecStop=/usr/bin/screen -p 0 -S mcServer -X eval 'stuff "save-all"\\015'
+ExecStop=/usr/bin/screen -p 0 -S mcServer -X eval 'stuff "stop"\\015'
+ExecStop=/bin/sleep 5
+
+[Install]
+WantedBy=multi-user.target

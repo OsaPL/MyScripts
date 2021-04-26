@@ -1,0 +1,23 @@
+# 3) Copy this file .service to /etc/systemd/system/
+# 4) Execute `sudo systemctl daemon-reload`
+# 5) Execute `sudo systemctl enable warforkServer`
+# 6) Execute `sudo systemctl start warforkServer`
+
+[Unit]
+Description=Warfork server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=60
+User=osa
+WorkingDirectory=/serverdata/steamServers/warfork/fvi-launcher/applications/warfork/Warfork.app/Contents/Resources
+ExecStart=/usr/bin/screen -DmS warforkServer /serverdata/steamServers/warfork/fvi-launcher/applications/warfork/Warfork.app/Contents/Resources/wf_server.x86_64
+
+ExecStop=/bin/sleep 5
+
+
+[Install]
+WantedBy=multi-user.target

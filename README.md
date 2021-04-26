@@ -29,3 +29,6 @@ volume fixer:
 
 TvPcSwitch: 
 	Switches to PC/TV setup
+
+linuxServerScripts:
+	Some (mainly game server) scripts used on my server pc

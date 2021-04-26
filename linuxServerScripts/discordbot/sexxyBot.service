@@ -1,0 +1,24 @@
+# 3) Copy this file .service to /etc/systemd/system/
+# 4) Execute `sudo systemctl daemon-reload`
+# 5) Execute `sudo systemctl enable sexxyBot`
+# 6) Execute `sudo systemctl start sexxyBot`
+
+[Unit]
+Description=Discord Sexxy Bot
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Environment="token=NzkwNjc1OTgxMzcxMTc5MDY4.X-EEZA.r_63gr5eSaPbrBK-gpZwUK0JEjo"
+Environment="masterId=240155153062297600"
+Type=simple
+Restart=always
+RestartSec=60
+WorkingDirectory=/serverdata/bot-test
+ExecStart=/usr/bin/screen -DmS sexxyBot ./sexxyBotStart.sh
+ExecStartPost=screen -S sexxyBot -X multiuser on ; screen -S sexxyBot -X acladd osa
+
+ExecStop=/bin/sleep 5
+
+[Install]
+WantedBy=multi-user.target

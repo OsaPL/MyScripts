@@ -1,0 +1,23 @@
+# 3) Copy this file .service to /etc/systemd/system/
+# 4) Execute `sudo systemctl daemon-reload`
+# 5) Execute `sudo systemctl enable dstServer`
+# 6) Execute `sudo systemctl start dstServer`
+
+[Unit]
+Description=Dst server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=60
+User=osa
+WorkingDirectory=/serverdata/steamServers/dontstarvetogether
+ExecStart=/usr/bin/screen -L -Logfile DstLogs -DmS dstServer ./start_dst_server.sh
+
+ExecStop=/usr/bin/screen -p 0 -S mcServer -X eval 'stuff "c_shutdown()"\\015'
+ExecStop=/bin/sleep 5
+
+[Install]
+WantedBy=multi-user.target
