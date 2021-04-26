@@ -1,0 +1,11 @@
+[Monitor0]
+Name=1.Name
+MonitorID=1.MonitorID
+BitsPerPixel=32
+Width=3840
+Height=2160
+DisplayFlags=0
+DisplayFrequency=59
+DisplayOrientation=0
+PositionX=0
+PositionY=0
