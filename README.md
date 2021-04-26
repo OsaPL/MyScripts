@@ -26,3 +26,6 @@ Spotlight_extractor:
 
 volume fixer:
 	Background script for reseting volume back to 100%
+
+TvPcSwitch: 
+	Switches to PC/TV setup
