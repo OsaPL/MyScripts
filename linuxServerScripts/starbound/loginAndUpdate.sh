@@ -1,0 +1,1 @@
+﻿steamcmd +login <login> +password <pass> +app_update 211820 validate
