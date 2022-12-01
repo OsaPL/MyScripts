@@ -1,0 +1,23 @@
+﻿# 3) Copy this file .service to /etc/systemd/system/
+# 4) Execute `sudo systemctl daemon-reload`
+# 5) Execute `sudo systemctl enable cloneHero`
+# 6) Execute `sudo systemctl start cloneHero`
+# Port: 14242
+
+[Unit]
+Description=CloneHero server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=60
+User=osa
+WorkingDirectory=/serverdata/cloneHero/
+ExecStart=/usr/bin/screen -DmS cloneHero /serverdata/cloneHero/Server -n "The Sexxy Jams [TSx]" -ps "<a funny password>" -a 192.168.0.10 -p 14242 -r
+
+ExecStop=/bin/sleep 5
+
+[Install]
+WantedBy=multi-user.target
