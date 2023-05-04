@@ -1,8 +1,16 @@
 #!/bin/bash
 
 FILE=/home/osa/.pcmode
-# bt service needs a restart to work after adapter change
-sudo systemctl restart bluetooth
+
+TVVIDEOSETUP="output.HDMI-A-1.enable output.HDMI-A-2.disable output.DP-1.disable"
+TVAUDIOSETUP='HDA ATI HDMI Digital Stereo (HDMI 2)'
+
+PCVIDEOSETUP="output.HDMI-A-1.disable output.DP-1.enable output.DP-1.primary output.HDMI-A-2.enable"
+PCAUDIOSETUP='Built-in Audio Analog Stereo'
+echo $PCAUDIOSETUP
+
+# bt service may need a restart to work after adapter change
+#sudo systemctl restart bluetooth
 
 if test -f "$FILE"; then
     echo "$FILE exists."
@@ -12,9 +20,9 @@ if test -f "$FILE"
 then
     rm $FILE
     # tv mode
-    kscreen-doctor output.HDMI-A-1.enable output.HDMI-A-2.disable output.DP-1.disable
-    # switch audio TODO! These should be automatic probably, atm just use `wpctl status` and get audio sink IDs from there
-    wpctl set-default 45
+    kscreen-doctor $TVVIDEOSETUP
+    # switch audio
+    pwsh ./getIdsFrom-wpctl.ps1 "$TVAUDIOSETUP"
     # turn on big picture -gamepadui -bigpicture
     STEAMID=$(pidof steam)
     kill $STEAMID
@@ -24,16 +32,12 @@ else
     touch $FILE
     # pc mode
     # switch displays
-    kscreen-doctor output.HDMI-A-1.disable output.DP-1.enable output.DP-1.primary output.HDMI-A-2.enable
-    # switch audio TODO! These should be automatic probably, atm just use `wpctl status` and get audio sink IDs from there
-    wpctl set-default 48
+    kscreen-doctor $PCVIDEOSETUP 
+    # switch audio 
+    pwsh ./getIdsFrom-wpctl.ps1 "$PCAUDIOSETUP"
     # kill big picture and return to normal steam
     STEAMID=$(pidof steam)
     kill $STEAMID
     sleep 15
     nohup steam &
 fi
-
-
-
-
