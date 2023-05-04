@@ -13,7 +13,7 @@ Environment="token=<token here>"
 Environment="masterId=<masterId here>"
 Type=simple
 Restart=always
-RestartSec=60
+RestartSec=60s
 WorkingDirectory=/serverdata/bot-test
 ExecStart=/usr/bin/screen -DmS sexxyBot ./sexxyBotStart.sh
 ExecStartPost=screen -S sexxyBot -X multiuser on ; screen -S sexxyBot -X acladd osa
