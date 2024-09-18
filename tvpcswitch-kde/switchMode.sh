@@ -2,12 +2,13 @@
 
 FILE=/home/osa/.pcmode
 
-TVVIDEOSETUP="output.HDMI-A-1.enable output.HDMI-A-2.disable output.DP-1.disable"
-TVAUDIOSETUP='HDA ATI HDMI Digital Stereo (HDMI 2)'
+# use `kscreen-doctor -o` to get video devices ids
+TVVIDEOSETUP="output.HDMI-A-3.enable output.HDMI-A-1.disable output.DP-1.disable output.HDMI-A-3.hdr.enable"
+# use `wpctl status` to get audio sink name
+TVAUDIOSETUP='Navi 31 HDMI/DP Audio Digital Stereo (HDMI)'
 
-PCVIDEOSETUP="output.HDMI-A-1.disable output.DP-1.enable output.DP-1.primary output.HDMI-A-2.enable"
+PCVIDEOSETUP="output.HDMI-A-3.disable output.DP-1.enable output.DP-1.primary output.HDMI-A-1.enable"
 PCAUDIOSETUP='Built-in Audio Analog Stereo'
-echo $PCAUDIOSETUP
 
 # bt service may need a restart to work after adapter change
 #sudo systemctl restart bluetooth
@@ -18,26 +19,21 @@ fi
 
 if test -f "$FILE"
 then
+    kdialog --passivepopup 'Switching to TV Mode' 20
     rm $FILE
     # tv mode
     kscreen-doctor $TVVIDEOSETUP
+
     # switch audio
     pwsh ./getIdsFrom-wpctl.ps1 "$TVAUDIOSETUP"
-    # turn on big picture -gamepadui -bigpicture
-    STEAMID=$(pidof steam)
-    kill $STEAMID
-    sleep 15
-    nohup steam -gamepadui -bigpicture &
 else
+    kdialog --passivepopup 'Switching to PC Mode' 20
     touch $FILE
+    # first we switch audio, cause analog is always available
+    pwsh ./getIdsFrom-wpctl.ps1 "$PCAUDIOSETUP"
+
     # pc mode
     # switch displays
     kscreen-doctor $PCVIDEOSETUP 
-    # switch audio 
-    pwsh ./getIdsFrom-wpctl.ps1 "$PCAUDIOSETUP"
-    # kill big picture and return to normal steam
-    STEAMID=$(pidof steam)
-    kill $STEAMID
-    sleep 15
-    nohup steam &
+
 fi
